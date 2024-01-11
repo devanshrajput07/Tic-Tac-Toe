@@ -16,6 +16,10 @@ function createBoard() {
   }
 }
 
+const currentPlayerDisplay = document.getElementById("current-player");
+const resetButton = document.getElementById("reset-button");
+const resultMessage = document.getElementById("result-message");
+
 function handleCellClick(event) {
   const index = event.target.dataset.index;
 
@@ -50,8 +54,9 @@ function checkWinner() {
       gameBoard[a] === gameBoard[b] &&
       gameBoard[a] === gameBoard[c]
     ) {
-      alert(`Player ${currentPlayer} wins!`);
+      resultMessage.textContent = `Player ${currentPlayer} wins!`;
       gameActive = false;
+      currentPlayerDisplay.textContent = "";
       return;
     }
   }
@@ -63,3 +68,24 @@ function checkWinner() {
 }
 
 createBoard();
+
+resetButton.addEventListener("click", resetGame);
+
+function switchPlayer() {
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+  currentPlayerDisplay.textContent = `Current Player: ${currentPlayer}`;
+}
+
+function resetGame() {
+  gameBoard = ["", "", "", "", "", "", "", "", ""];
+  gameActive = true;
+
+  cells.forEach((cell) => {
+    cell.textContent = "";
+  });
+
+  currentPlayer = "X";
+  currentPlayerDisplay.textContent = `Current Player: ${currentPlayer}`;
+}
+
+currentPlayerDisplay.textContent = `Current Player: ${currentPlayer}`;
